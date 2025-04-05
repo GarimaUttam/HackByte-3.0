@@ -22,10 +22,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       const formData = new FormData();
       formData.append("image", blob, "media_input"); // "image" field matches backend
 
-      let endpoint = "http://localhost:8000/predict-image/"; // default
+      let endpoint = "https://hackbyte-3-0.onrender.com/predict-image/"; // default
 
       if (fileType.startsWith("video/")) {
-        endpoint = "http://localhost:8000/predict-video/";
+        endpoint = "https://hackbyte-3-0.onrender.com/predict-video/";
       }
 
       const result = await fetch(endpoint, {

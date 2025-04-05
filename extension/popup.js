@@ -130,10 +130,13 @@ async function sendImageToImageModel(imageBlob) {
   showLoading();
 
   try {
-    const response = await fetch("http://localhost:8000/predict-image/", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://hackbyte-3-0.onrender.com/predict-image/",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     const resText = await response.text();
     console.log("📥 Image model response:", resText);
@@ -158,10 +161,13 @@ async function sendImageToVideoModel(imageBlob) {
   showLoading();
 
   try {
-    const response = await fetch("http://localhost:8000/predict-video/", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://hackbyte-3-0.onrender.com/predict-video/",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     const resText = await response.text();
     console.log("📥 Video model response:", resText);
