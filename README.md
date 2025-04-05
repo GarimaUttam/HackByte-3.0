@@ -1,8 +1,5 @@
 # 🎭 FaceGuard – Deepfake Image & Video Detector Extension
 
-![banner](https://img.shields.io/badge/Built%20with-MobileNetV2-blue?style=flat-square)
-![status](https://img.shields.io/badge/Status-Working%20Prototype-brightgreen?style=flat-square)
-
 ## 🔍 About the Project
 
 **FaceGuard** is a powerful browser extension backed by a deep learning model that detects whether an image or video contains a real human face or one generated using AI (deepfakes). It allows users to:
