@@ -1,3 +1,5 @@
+importScripts("config.js")
+
 // Set up the context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.removeAll(() => {
@@ -22,10 +24,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       const formData = new FormData();
       formData.append("image", blob, "media_input"); // "image" field matches backend
 
-      let endpoint = "https://hackbyte-3-0.onrender.com/predict-image/"; // default
+      let endpoint = `${API_BASE_URL}/predict-image/`; // default
 
       if (fileType.startsWith("video/")) {
-        endpoint = "https://hackbyte-3-0.onrender.com/predict-video/";
+        endpoint = `${API_BASE_URL}/predict-video/`;
       }
 
       const result = await fetch(endpoint, {

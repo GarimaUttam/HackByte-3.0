@@ -43,20 +43,20 @@ function showLoading() {
 }
 
 // Display result
-function showResult(label, confidence) {
+function showResult(label, confidence, mediaType = "image") {
   resultDiv.style.display = "block";
 
-  if (label === "real") {
-    resultDiv.innerHTML = `✅ Real Image ${
-      confidence ? `(${confidence}%)` : ""
-    }`;
-    resultDiv.className = "result-box success";
-  } else {
-    resultDiv.innerHTML = `⚠ AI-Generated Content ${
-      confidence ? `(${confidence}%)` : ""
-    }`;
-    resultDiv.className = "result-box warning";
-  }
+  const isReal = label === "real";
+  const emoji = isReal ? (mediaType === "video" ? "" : "") : "";
+
+  const textLabel = isReal
+    ? "Real Content"
+    : "AI-Generated Content";
+
+  const confidenceText = confidence ? ` (${confidence}%)` : "";
+
+  resultDiv.innerHTML = `${emoji} ${textLabel}${confidenceText}`;
+  resultDiv.className = "result-box " + (isReal ? "success" : "warning");
 }
 
 // Handle uploaded file
@@ -65,7 +65,7 @@ function handleFile(file) {
 
   const maxSizeMB = 20;
   if (file.size / (1024 * 1024) > maxSizeMB) {
-    resultDiv.innerText = "❌ File too large (max 20MB)";
+    resultDiv.innerText = "File too large (max 20MB)";
     resultDiv.className = "result-box warning";
     resultDiv.style.display = "block";
     return;
@@ -82,7 +82,7 @@ function handleFile(file) {
   } else if (fileType.startsWith("video/")) {
     extractFrameFromVideo(file);
   } else {
-    resultDiv.innerText = "❌ Unsupported file type.";
+    resultDiv.innerText = "Unsupported file type.";
     resultDiv.className = "result-box warning";
     resultDiv.style.display = "block";
   }
@@ -131,7 +131,7 @@ async function sendImageToImageModel(imageBlob) {
 
   try {
     const response = await fetch(
-      "https://hackbyte-3-0.onrender.com/predict-image/",
+      `${API_BASE_URL}/predict-image/`,
       {
         method: "POST",
         body: formData,
@@ -139,7 +139,7 @@ async function sendImageToImageModel(imageBlob) {
     );
 
     const resText = await response.text();
-    console.log("📥 Image model response:", resText);
+    console.log("Image model response:", resText);
 
     const data = JSON.parse(resText);
     const label = data.prediction?.toLowerCase();
@@ -147,8 +147,8 @@ async function sendImageToImageModel(imageBlob) {
 
     showResult(label, confidence);
   } catch (error) {
-    console.error("❌ Error contacting image model:", error);
-    resultDiv.innerText = "❌ Error contacting image model.";
+    console.error("Error contacting image model:", error);
+    resultDiv.innerText = "Error contacting image model.";
     resultDiv.className = "result-box warning";
   }
 }
@@ -162,7 +162,7 @@ async function sendImageToVideoModel(imageBlob) {
 
   try {
     const response = await fetch(
-      "https://hackbyte-3-0.onrender.com/predict-video/",
+      `${API_BASE_URL}/predict-video/`,
       {
         method: "POST",
         body: formData,
@@ -170,7 +170,7 @@ async function sendImageToVideoModel(imageBlob) {
     );
 
     const resText = await response.text();
-    console.log("📥 Video model response:", resText);
+    console.log("Video model response:", resText);
 
     const data = JSON.parse(resText);
     const label = data.prediction?.toLowerCase();
@@ -178,8 +178,8 @@ async function sendImageToVideoModel(imageBlob) {
 
     showResult(label, confidence);
   } catch (error) {
-    console.error("❌ Error contacting video model:", error);
-    resultDiv.innerText = "❌ Error contacting video model.";
+    console.error("Error contacting video model:", error);
+    resultDiv.innerText = "Error contacting video model.";
     resultDiv.className = "result-box warning";
   }
 }
