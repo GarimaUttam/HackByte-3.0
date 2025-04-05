@@ -27,7 +27,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       const formData = new FormData();
       formData.append("file", blob, "image.jpg");
 
-      const result = await fetch("https://hackbyte-3-0.onrender.com/predict/", {
+      const result = await fetch("https://hackbyte-3-0.onrender.com/predict-image/", {
         method: "POST",
         body: formData,
       });
