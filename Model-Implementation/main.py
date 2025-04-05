@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from tensorflow.keras.utils import img_to_array, load_img
 from keras.models import load_model
 import numpy as np
@@ -6,6 +7,14 @@ from io import BytesIO
 from PIL import Image
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model = load_model("model.keras", compile=False)
 
