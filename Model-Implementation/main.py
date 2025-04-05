@@ -51,9 +51,9 @@ def preprocess_image(image_data, target_size=(256, 256)):
     return x
 
 @app.post("/predict-video/")
-async def predict_video(file: UploadFile = File(...)):
+async def predict_video(image: UploadFile = File(...)):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
-        temp_file.write(await file.read())
+        temp_file.write(await image.read())
         temp_video_path = temp_file.name
     
     frames = extract_frames(temp_video_path)
@@ -73,8 +73,8 @@ async def predict_video(file: UploadFile = File(...)):
     return {"prediction": label, "confidence": float(np.max(avg_prediction))}
 
 @app.post("/predict-image/")
-async def predict(file: UploadFile = File(...)):
-    image_bytes = await file.read()
+async def predict_image(image: UploadFile = File(...)):
+    image_bytes = await image.read()
     image_data = preprocess_image(image_bytes)
 
     prediction = model.predict(image_data)
@@ -82,4 +82,7 @@ async def predict(file: UploadFile = File(...)):
 
     label = "real" if predicted_class == 0 else "fake"
 
-    return {"prediction": label}
+    return {
+        "prediction": label,
+        "confidence": float(np.max(prediction))
+    }

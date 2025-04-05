@@ -1,22 +1,89 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Face Prediction</title>
+    <title>Face Authenticity Checker</title>
     <style>
       body {
         font-family: sans-serif;
-        min-width: 200px;
-        padding: 10px;
+        min-width: 300px;
+        padding: 15px;
       }
-      #result {
+      #drop-area {
+        border: 2px dashed #888;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        color: #555;
+        margin-bottom: 20px;
+      }
+      .result-box {
+        display: none;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 8px;
         font-weight: bold;
-        font-size: 16px;
+        text-align: center;
+      }
+      .success {
+        background-color: #e0ffe0;
+        color: #0a0;
+      }
+      .warning {
+        background-color: #ffe0e0;
+        color: #a00;
+      }
+      .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      input[type="file"] {
+        display: none;
       }
     </style>
   </head>
   <body>
-    <h3>Last Prediction:</h3>
-    <div id="result">No prediction yet.</div>
+    <input
+      type="file"
+      id="fileElem"
+      style="display: none"
+      accept="image/*,video/*"
+    />
+    <div
+      id="drop-area"
+      style="
+        border: 2px dashed #888;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+      "
+    >
+      <p>📁 Drop an image or video here</p>
+      <p>or click to upload</p>
+    </div>
+
+    <video
+      id="video-element"
+      style="display: none"
+      crossorigin="anonymous"
+    ></video>
+    <canvas id="video-canvas" style="display: none"></canvas>
+
+    <div id="result" style="display: none; margin-top: 15px"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>

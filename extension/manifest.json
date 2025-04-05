@@ -3,7 +3,13 @@
   "name": "Face Authenticity Checker",
   "version": "1.0",
   "description": "Check if a face is real or fake.",
-  "permissions": ["contextMenus", "storage", "activeTab", "scripting", "notifications"],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
@@ -14,5 +20,11 @@
   },
   "icons": {
     "128": "icon.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icon.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
