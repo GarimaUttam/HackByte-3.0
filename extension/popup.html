@@ -1,104 +1,32 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Face Authenticity Checker</title>
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        min-width: 320px;
-        padding: 20px;
-        background-color: #f7f7f7;
-        color: #333;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Face Authenticity Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🛡 Face Guard</h1>
+  <p class="subtitle">Detect deepfakes and forged media in images or videos</p>
 
-      h1 {
-        font-size: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #222;
-      }
+  <input type="file" id="fileElem" accept="image/,video/" />
+  
+  <div id="drop-area">
+    <p><strong>Drop an image or video here</strong></p>
+    <p>or click to upload</p>
+  </div>
 
-      #drop-area {
-        border: 2px dashed #888;
-        border-radius: 12px;
-        padding: 30px 20px;
-        text-align: center;
-        cursor: pointer;
-        color: #555;
-        background-color: #fff;
-        transition: border-color 0.3s ease;
-      }
+  <video id="video-element" style="display: none" crossorigin="anonymous"></video>
+  <canvas id="video-canvas" style="display: none"></canvas>
 
-      #drop-area:hover {
-        border-color: #3498db;
-      }
+  <div id="result" class="result-box"></div>
 
-      .result-box {
-        display: none;
-        padding: 12px;
-        margin-top: 15px;
-        border-radius: 10px;
-        font-weight: bold;
-        text-align: center;
-        font-size: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
+  <footer>
+    <p>⚠ This tool is experimental. For best results, use clear media with visible faces.</p>
+  </footer>
 
-      .success {
-        background-color: #e0ffe0;
-        color: #0a0;
-        border: 1px solid #0a0;
-      }
-
-      .warning {
-        background-color: #ffe0e0;
-        color: #a00;
-        border: 1px solid #a00;
-      }
-
-      .loader {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 12px;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      input[type="file"] {
-        display: none;
-      }
-
-      p {
-        margin: 5px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Face Guard: Detect fake videos/images</h1>
-
-    <input type="file" id="fileElem" accept="image/*,video/*" />
-    <div id="drop-area">
-      <p>Drop an image or video here</p>
-      <p>or click to upload</p>
-    </div>
-
-    <video id="video-element" style="display: none" crossorigin="anonymous"></video>
-    <canvas id="video-canvas" style="display: none"></canvas>
-
-    <div id="result" class="result-box"></div>
-
-    <script src="config.js"></script>
-    <script src="popup.js"></script>
-  </body>
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
 </html>
