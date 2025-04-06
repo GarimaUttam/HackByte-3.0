@@ -87,49 +87,62 @@ B -->|Display results| I[User Interface]
 User Interaction:
 
 # Users can interact with the extension in two ways:
+
 1. Right-click on media (image or video) on a webpage.
 2. Upload media (image or video) via the popup interface.
 
 # Frontend (Chrome Extension):
+
 1. The extension captures the media URL or file and sends it to the backend API.
 2. For videos, a frame is extracted using the <canvas> element before sending it to the backend.
 
 # Backend (FastAPI):
+
 The backend determines the media type (image or video) and routes the request to the appropriate endpoint:
+
 1. /predict-image/ for images.
 2. /predict-video/ for videos.
-The backend processes the media using the MobileNetV2 deepfake detection model.
+   The backend processes the media using the MobileNetV2 deepfake detection model.
 
 # Deepfake Detection Model (MobileNetV2):
+
 The model analyzes the media and generates:
+
 1. A prediction: real or fake.
 2. A confidence score: Probability of authenticity.
 
 # Results Handling:
+
 1. The backend returns the prediction and confidence score to the frontend.
 2. The extension displays the results in the popup or as a notification, with visual cues (e.g., emojis, colors).
 
 ---
 
 1. Frontend Workflow
+
+```markdown
 flowchart TD
-    A[User Action] -->|Right-click or Upload| B[Chrome Extension]
-    B -->|Send media| C[Handle File]
-    C -->|Determine type| D{Media Type?}
-    D -->|Image| E[Send to /predict-image/]
-    D -->|Video| F[Extract Frame]
-    F -->|Send frame| G[Send to /predict-video/]
-    E & G -->|Receive results| H[Display Results]
+A[User Action] -->|Right-click or Upload| B[Chrome Extension]
+B -->|Send media| C[Handle File]
+C -->|Determine type| D{Media Type?}
+D -->|Image| E[Send to /predict-image/]
+D -->|Video| F[Extract Frame]
+F -->|Send frame| G[Send to /predict-video/]
+E & G -->|Receive results| H[Display Results]
+```
 
 ---
 
 2. Backend Workflow
+
+```markdown
 flowchart TD
-    A[Receive Media] -->|Route to endpoint| B{Endpoint?}
-    B -->|/predict-image/| C[Process Image]
-    B -->|/predict-video/| D[Process Video]
-    C & D -->|Analyze with MobileNetV2| E[Generate Prediction + Confidence]
-    E -->|Return results| F[Frontend]
+A[Receive Media] -->|Route to endpoint| B{Endpoint?}
+B -->|/predict-image/| C[Process Image]
+B -->|/predict-video/| D[Process Video]
+C & D -->|Analyze with MobileNetV2| E[Generate Prediction + Confidence]
+E -->|Return results| F[Frontend]
+```
 
 ---
 
